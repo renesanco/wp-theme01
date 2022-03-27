@@ -1,0 +1,50 @@
+version: "3.9"
+
+services:
+  db:
+    image: mariadb:10.7
+    volumes:
+      - wp_theme01_db:/var/lib/mysql
+    restart: always
+    env_file:
+      - ../env/db.env
+    secrets:
+      - db_root_pw
+      - wp_db_pw
+    environment:
+      MARIADB_ROOT_PASSWORD_FILE: /run/secrets/db_root_pw
+      MARIADB_PASSWORD_FILE: /run/secrets/wp_db_pw
+      MARIADB_DATABASE: wp_db
+      MARIADB_USER: wp_db_user
+      
+  wordpress:
+    depends_on:
+      - db
+    build: .
+    volumes:
+      - ./volumes/home/.bashrc:/root/.bashrc
+      - ./volumes/html/.htaccess:/var/www/html/.htaccess
+      - ./volumes/html/wp-content:/var/www/html/wp-content
+      - ../src:/var/www/html/wp-content/themes/renesanco_wp_theme01
+    ports:
+      - "8001:80"
+    restart: always
+    env_file:
+      - ../env/wp.env
+    secrets:
+      - wp_db_pw
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: wp_db
+      WORDPRESS_DB_USER: wp_db_user
+      WORDPRESS_DB_PASSWORD_FILE: /run/secrets/wp_db_pw
+
+
+volumes:
+  wp_theme01_db: {}
+
+secrets:
+  db_root_pw:
+    file: ../env/db_root_pw.secret
+  wp_db_pw:
+    file: ../env/wp_db_pw.secret
