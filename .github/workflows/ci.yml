@@ -1,0 +1,28 @@
+name: CI
+ on:
+   pull_request:
+    branches: [dev, master]
+    push: [dev, master]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-20.04 # ubuntu-latest, windows-2022, macos-11
+
+	  env: 
+      SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+      SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}	
+
+    steps:
+      # Install Dependencies
+      # Prettier Test
+      # Commit Message Test
+      # Unit Test
+      # Upload Code coverage
+      # Build on Merge
+      # Upload Build as Artifact on Merge
+      # Deploy to Staging Server on dev branch Merge
+      # Deploy to Production Server on dev master Merge
+      # Upload Coverage to Codecov on dev master Merge
+      # Cache Dependencies
