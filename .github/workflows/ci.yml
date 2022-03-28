@@ -7,18 +7,43 @@ name: CI
 jobs:
 
   build:
-
     runs-on: ubuntu-20.04 # ubuntu-latest, windows-2022, macos-11
 
 	  env: 
-      SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
-      SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}	
+      # SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+      # SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}	
 
     steps:
       # Install Dependencies
-      # Prettier Test
+
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your workflow can access it.
+      # @seemore: https://github.com/actions/checkout
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      # Setup Composer
+      - name: Use composer
+        uses: php-actions/composer@v6
+        with:
+          php_version: '8.1'
+          php_extensions: imagick redis
+
+      # - name: Cache Composer dependencies
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: /tmp/composer-cache
+      #     key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-php-
+
+      - name: Check format by Prettier
+        run: prettier --check "**/*.{php,yml,html,css}"
+
       # Commit Message Test
       # Unit Test
+      # - run: npm test -- --coverage
+      #   env:
+      #     CI: true
       # Upload Code coverage
       # Build on Merge
       # Upload Build as Artifact on Merge
