@@ -38,7 +38,7 @@ jobs:
       #     restore-keys: |
       #       ${{ runner.os }}-php-
 
-      - name: Check format by Prettier
+      - name: Check format by Prettier #Worked?
         run: npm run prettier "**/*.{php,yml,html,css}" --check
 
       # Commit Message Test
