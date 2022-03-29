@@ -40,12 +40,16 @@ jobs:
 
       # - name: Check format by Prettier #Worked?
       #   run: npx run prettier "**/*.{php,yml,html,css}" --check
-      - name: Prettify code
-        uses: creyD/prettier_action@v4.2
-        with:
-          # This part is also where you can pass other options, for example:
-          prettier_plugins: @prettier/plugin-php
-          prettier_options: --check **/*.{php,css}
+      # - name: Prettify code
+      #   uses: creyD/prettier_action@v4.2
+      #   with:
+      #     # This part is also where you can pass other options, for example:
+      #     prettier_plugins: @prettier/plugin-php
+      #     prettier_options: --check **/*.{php,css}
+      - name: Own Prettier
+        run: |
+          npm install --save-dev --save-exact prettier
+          npx run prettier --check **/*.{php,css}
 
       # Commit Message Test
       # Unit Test
