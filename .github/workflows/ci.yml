@@ -28,9 +28,12 @@ jobs:
           node-version: 14.x
       - name: Install Prettier PHP Plugin
         run: |
+          npm ci
           npm install --save-dev --save-exact prettier
           npm install --save-dev prettier @prettier/plugin-php
           npx run prettier --check **/*.{php,css}
+        env:
+          CI: true
 
       # Setup Composer
       # - name: Use composer
