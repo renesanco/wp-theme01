@@ -39,7 +39,7 @@ jobs:
       #       ${{ runner.os }}-php-
 
       - name: Check format by Prettier
-        run: prettier --check "**/*.{php,yml,html,css}"
+        run: npm run prettier --check "**/*.{php,yml,html,css}"
 
       # Commit Message Test
       # Unit Test
