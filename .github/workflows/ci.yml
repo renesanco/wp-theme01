@@ -22,10 +22,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       
-      # - name: Prepare node
-      #   uses: actions/setup-node@v2
-      #   with:
-      #     node-version: 14.x
+      - name: Prepare node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+      - name: Install Prettier PHP Plugin
+        run: |
+          npm install --save-dev --save-exact prettier
+          npm install --save-dev prettier @prettier/plugin-php
+          npx run prettier --check **/*.{php,css}
 
       # Setup Composer
       # - name: Use composer
@@ -45,12 +50,12 @@ jobs:
 
       # - name: Check format by Prettier #Worked?
       #   run: npx run prettier "**/*.{php,yml,html,css}" --check
-      - name: Prettify code
-        uses: creyD/prettier_action@v4.2
-        run: npm install --save-dev prettier @prettier/plugin-php
-        with:
-          # This part is also where you can pass other options, for example:
-          prettier_options: --check **/*.{php,css}
+
+      # - name: Prettify code
+      #   uses: creyD/prettier_action@v4.2
+      #   with:
+      #     # This part is also where you can pass other options, for example:
+      #     prettier_options: --check **/*.{php,css}
       # - name: Own Prettier
         
       #     npx run prettier --check **/*.{php,css}
